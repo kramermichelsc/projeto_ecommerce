@@ -6,6 +6,14 @@ from django.http import HttpResponse
 
 from django.contrib import messages
 
+from .models import Produtos
+
+def consultaprodutos(request):
+    context = {
+        'produtos': Produtos.objects.all()
+    }
+    return render(request, 'consultaprodutos.html', context)
+
 def index(request):
     return render(request, 'index.html')
 
