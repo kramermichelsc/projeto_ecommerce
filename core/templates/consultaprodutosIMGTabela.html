@@ -19,38 +19,26 @@
               <th scope="col">Descrição</th>
               <th scope="col">Quantidade</th>
               <th scope="col">Valor</th>
+              <th scope="col">Imagem do Produto</th>
             </tr>
           </thead>
           <tbody>
             {% for produto in produtos%}
                 <tr>
                     <td scope="row">{{produto.codigo}}</td>
-                    <td scope="row"><a href="#modal{{produto.codigo}}" data-toggle="modal">{{ produto.nome }}</a></td>
+                    <td scope="row">{{produto.nome}}</td>
                     <td scope="row">{{produto.descricao}}</td>
                     <td scope="row">{{produto.quantidade}}</td>
                     <td scope="row">{{produto.valor}}</td>
+                    <td scope="row"><img src='{{ produto.imagem.url }}' class='img-fluid' alt='{{ produto.nome }}'/></td>
                 </tr>
-                <div class="modal fade bd-example-modal-lg show" id="modal{{produto.codigo}}" role="dialog">
-                  <div class="modal-dialog">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body" id="dynamic-content">
-                              <img src='{{ produto.imagem.url }}' class='img-fluid' alt='{{ produto.nome }}'/>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
             {% endfor %}
           </tbody>
     </table>
     {% else %}
         <h2>Ainda não existem produtos cadastrados. :(</h2>
     {% endif %}
-  </div>
+    </div>
 {% bootstrap_javascript jquery='full' %}    
 </body>
 </html>
