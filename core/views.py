@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .forms import ProdutosModelForm
 
@@ -21,19 +21,24 @@ def contato(request):
     return render(request, 'contato.html')
 
 def produtos(request):
-    if request.method == 'POST':
-        form = ProdutosModelForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            #messages.success(request, 'Produto Salvo com sucesso.')
-            return HttpResponse('Dados enviados com sucesso')
-            form = ProdutosModelForm()
+    #print(f'Usuário:{request.user}')
+    if str(request.user) !='AnonymousUser':   #se for diferente de usuário anônimo executa o POST
+        if request.method == 'POST':
+            form = ProdutosModelForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Produto Salvo com sucesso.')
+                #return HttpResponse('Dados enviados com sucesso')
+                form = ProdutosModelForm()
+            else:
+                messages.error(request, 'Erro ao salvar o produto')
+                #return HttpResponse('Os Dados não foram enviados')
         else:
-            #messages.error(request, 'Erro ao salvar o produto')
-            return HttpResponse('Os Dados não foram enviados')
+            form = ProdutosModelForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'produto.html', context)
     else:
-        form = ProdutosModelForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'produto.html', context)
+        #return redirect('consultaprodutos') #se usuário igual anônimo
+        return render(request, 'index.html')
