@@ -13,6 +13,18 @@ class Produtos(models.Model):
     def __str__(self):
         return self.nome
 
+class Cliente(models.Model):
+    cpf = models.IntegerField('CPF', primary_key=True, unique=True, blank=False)
+    nome = models.CharField('Nome do Cliente', max_length=100, blank=False)
+    data_nascimento = models.DateField('Data deNascimento')
+    codigo_produto = models.OneToOneField(Produtos, on_delete=models.CASCADE)
+    #codigo_produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
+    email = models.EmailField('E-mail', max_length=100, blank=False)
+    telefone = models.BigIntegerField('Telefone', help_text='Inserir númro com DD')
+
+    def __str__(self):
+        return self.nome
+
 
 
 

@@ -17,6 +17,9 @@ def consultaprodutos(request):
 def index(request):
     return render(request, 'index.html')
 
+#def admin(request):
+    #return render(request,'admin.site.urls')
+
 def contato(request):
     return render(request, 'contato.html')
 
@@ -40,5 +43,7 @@ def produtos(request):
         }
         return render(request, 'produto.html', context)
     else:
-        #return redirect('consultaprodutos') #se usuário igual anônimo
-        return render(request, 'index.html')
+        return redirect('/admin/login/?next=/admin/') #se usuário igual anônimo
+        #return render(request, 'admin', context)
+        
+        
